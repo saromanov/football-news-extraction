@@ -15,7 +15,8 @@ class Model:
             raise Exception("Text is empty")
 
         for sent in nltk.sent_tokenize(self.text):
-            tokenizer = [word for word in nltk.word_tokenize(sent) if word not in self._stopwords()]
+            tokenizer = [word for word in  nltk.RegexpTokenizer(r'\w+').tokenize(sent) \
+                        if word not in self._stopwords() or word not in [',', '.', ""]]
             tagging = nltk.pos_tag(tokenizer)
             for chunk in nltk.ne_chunk(tagging):
                 print(chunk)
